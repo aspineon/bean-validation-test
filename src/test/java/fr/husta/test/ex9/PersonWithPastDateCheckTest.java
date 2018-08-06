@@ -1,20 +1,19 @@
 package fr.husta.test.ex9;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Date;
-import java.util.Locale;
-import java.util.Set;
+import org.apache.commons.lang.time.DateUtils;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Set;
 
-import org.apache.commons.lang.time.DateUtils;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PersonWithPastDateCheckTest
 {
@@ -45,7 +44,7 @@ public class PersonWithPastDateCheckTest
 
         constraintViolations = validator.validate(myPojo);
 
-        assertTrue(constraintViolations.size() == 0);
+        assertThat(constraintViolations).isEmpty();
     }
 
     @Test
@@ -62,9 +61,9 @@ public class PersonWithPastDateCheckTest
 
         constraintViolations = validator.validate(myPojo);
 
-        assertTrue(constraintViolations.size() >= 1);
+        assertThat(constraintViolations).isNotEmpty();
         String interpolatedMessage = constraintViolations.iterator().next().getMessage();
-        assertTrue(interpolatedMessage.startsWith("Must be in the past"));
+        assertThat(interpolatedMessage).startsWith("Must be in the past");
     }
 
     @Test
@@ -80,7 +79,7 @@ public class PersonWithPastDateCheckTest
 
         constraintViolations = validator.validate(myPojo);
 
-        assertTrue(constraintViolations.size() >= 1);
+        assertThat(constraintViolations).isNotEmpty();
     }
 
     /**
@@ -104,7 +103,7 @@ public class PersonWithPastDateCheckTest
 
         constraintViolations = validator.validate(myPojo);
 
-        assertTrue(constraintViolations.isEmpty());
+        assertThat(constraintViolations).isEmpty();
     }
 
     @Test
@@ -122,7 +121,7 @@ public class PersonWithPastDateCheckTest
 
         constraintViolations = validator.validate(myPojo);
 
-        assertTrue(constraintViolations.size() >= 1);
+        assertThat(constraintViolations).isNotEmpty();
     }
 
 }
